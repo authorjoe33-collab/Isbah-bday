@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8d8e5" />
+  <title>A Little Box of Happiness ♡</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Sacramento&display=swap');
+
+    :root {
+      --pink: #f5bfd2;
+      --deep-pink: #d8759d;
+      --rose: #bd668b;
+      --cream: #fff8f4;
+      --paper: #fffdf9;
+      --ink: #765568;
+      --soft: #fbe7ee;
+      --tape: #f6d7a9;
+      --shadow: 0 12px 28px rgba(145, 87, 112, .13);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f9dce7;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.8) 0 2px, transparent 3px),
+        radial-gradient(circle at 80% 65%, rgba(255,255,255,.7) 0 2px, transparent 3px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.13) 0 1px, transparent 1px 5px),
+        linear-gradient(135deg, #f9dce7, #f5cbdc 48%, #fbe8ed);
+      background-size: 47px 47px, 61px 61px, auto, auto;
+      overflow-x: hidden;
+    }
+
+    button { font: inherit; }
+    .page { display: none; min-height: 100vh; padding: 28px 16px 42px; }
+    .page.active { display: block; animation: appear .45s ease both; }
+    @keyframes appear { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+
+    .cover-wrap { min-height: calc(100vh - 70px); display: grid; place-items: center; }
+    .paper {
+      position: relative;
+      width: min(100%, 540px);
+      padding: 48px 25px 38px;
+      border-radius: 5px 18px 8px 15px;
+      background:
+        radial-gradient(rgba(180,130,140,.09) .7px, transparent .8px) 0 0/8px 8px,
+        var(--paper);
+      box-shadow: var(--shadow), 5px 5px 0 rgba(255,255,255,.55);
+      transform: rotate(-.6deg);
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.9);
+    }
+    .paper:before, .paper:after {
+      content: ""; position: absolute; width: 105px; height: 25px;
+      background: rgba(244, 204, 157, .66); top: -10px; left: 50%;
+      transform: translateX(-50%) rotate(-2deg); box-shadow: 0 2px 4px rgba(100,60,60,.05);
+    }
+    .paper:after { width: 62px; height: 18px; top: auto; bottom: -8px; left: 18%; transform: rotate(7deg); opacity: .75; }
+    .eyebrow { letter-spacing: .22em; text-transform: uppercase; font-size: 10px; color: #bb8299; font-weight: 700; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font: 48px/1.04 'Sacramento', cursive; color: #c66f94; margin: 16px 0 12px; }
+    .subtitle { font-size: 13px; line-height: 1.8; color: #98798a; max-width: 290px; margin: 0 auto 24px; }
+    .cover-art { font-size: 53px; letter-spacing: 7px; margin: 16px 0 22px; filter: drop-shadow(0 4px 2px rgba(190,110,145,.12)); }
+    .sticker { position: absolute; font-size: 27px; filter: drop-shadow(0 3px 2px rgba(120,70,90,.12)); }
+    .s1 { top: 42px; left: 20px; transform: rotate(-15deg); }
+    .s2 { top: 62px; right: 23px; transform: rotate(13deg); }
+    .s3 { bottom: 36px; right: 23px; transform: rotate(12deg); }
+    .s4 { bottom: 56px; left: 23px; transform: rotate(-12deg); }
+    .primary-btn, .secondary-btn {
+      border: 0; border-radius: 999px; padding: 13px 23px; cursor: pointer;
+      color: white; background: linear-gradient(135deg, #dc8eae, #c66f96);
+      box-shadow: 0 6px 14px rgba(198,111,150,.23); font-weight: 700; letter-spacing: .03em;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .primary-btn:hover, .secondary-btn:hover { transform: translateY(-2px); box-shadow: 0 9px 17px rgba(198,111,150,.27); }
+    .secondary-btn { background: #f2dce5; color: #a55f7d; box-shadow: none; }
+    .tiny-note { font-size: 10px; color: #b38da0; margin-top: 15px; }
+
+    .journal-shell { width: min(100%, 850px); margin: 0 auto; }
+    .journal-head { text-align: center; margin: 5px 0 22px; }
+    .journal-head h2 { font: 43px 'Sacramento', cursive; color: #bd668b; margin: 4px 0 0; }
+    .journal-head p { font-size: 12px; color: #9d788b; margin: 3px 0; }
+    .music-card {
+      position: relative; display: flex; align-items: center; gap: 13px;
+      width: min(100%, 520px); margin: 0 auto 24px; padding: 15px 16px;
+      background: #fffaf7; border: 1px dashed #e8a9c1; border-radius: 13px;
+      box-shadow: 0 7px 17px rgba(145,87,112,.10); transform: rotate(.3deg);
+    }
+    .music-icon { width: 48px; height: 48px; flex: 0 0 48px; display:grid; place-items:center; border-radius: 50%; background:#fbe2eb; font-size:24px; }
+    .music-copy { flex: 1; min-width: 0; }
+    .music-copy strong { display:block; font-size: 13px; color:#9d5878; }
+    .music-copy span { display:block; font-size: 10px; color:#ad8a9b; margin-top:3px; line-height:1.4; }
+    .music-card button { flex: 0 0 auto; border:0; border-radius:99px; background:#d982a5; color:white; padding:10px 13px; font-size:11px; font-weight:700; cursor:pointer; }
+    .music-card button:disabled { opacity:.65; cursor:default; }
+    .lock-hint { text-align:center; font-size:11px; color:#a77b90; margin:-12px 0 20px; }
+    .gift-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:17px; }
+    .gift-card {
+      position:relative; min-height:230px; padding:13px 12px 15px; border:0; text-align:center;
+      background: #fffdf9; border-radius: 5px 15px 8px 13px; box-shadow: var(--shadow);
+      cursor:pointer; color:var(--ink); transition:transform .2s, opacity .2s; overflow:hidden;
+    }
+    .gift-card:nth-child(odd) { transform:rotate(-1.2deg); }
+    .gift-card:nth-child(even) { transform:rotate(1.1deg); }
+    .gift-card:not(:disabled):hover { transform:translateY(-4px) rotate(0deg); }
+    .gift-card:disabled { cursor:not-allowed; }
+    .gift-card:disabled .gift-image { filter:grayscale(.3); opacity:.48; }
+    .gift-card:disabled .gift-name { opacity:.65; }
+    .gift-image-wrap { position:relative; height:145px; border:1px solid #f4dce5; background:#fff4f6; padding:6px; transform:rotate(.4deg); }
+    .gift-image { width:100%; height:100%; object-fit:cover; display:block; }
+    .gift-emoji { height:100%; display:grid; place-items:center; font-size:58px; background:linear-gradient(135deg,#fff0f5,#fbe0e9); }
+    .tape { position:absolute; top:6px; left:50%; transform:translateX(-50%) rotate(-4deg); width:65px; height:15px; background:rgba(244,211,169,.76); z-index:2; }
+    .gift-name { font:27px 'Sacramento', cursive; color:#bd668b; margin:10px 0 0; }
+    .gift-caption { font-size:9px; color:#b08a9b; margin:0; }
+    .lock-overlay { position:absolute; inset:0; display:grid; place-items:center; background:rgba(255,246,249,.35); font-size:25px; pointer-events:none; }
+    .gift-card.unlocked .lock-overlay { display:none; }
+    .gift-card.unlocked:after { content:"✦"; position:absolute; top:7px; right:11px; color:#d77fa2; font-size:18px; }
+
+    .inside-paper { width:min(100%,600px); margin:25px auto; min-height:65vh; padding:30px 22px; background:var(--paper); border-radius:8px 17px 7px 13px; box-shadow:var(--shadow); position:relative; text-align:center; }
+    .inside-paper h2 { font:42px 'Sacramento',cursive; color:#bd668b; margin:7px 0 10px; }
+    .inside-photo { width:min(100%,360px); max-height:340px; object-fit:cover; border:9px solid white; outline:1px solid #f0d3df; box-shadow:0 8px 20px rgba(145,87,112,.13); transform:rotate(-1deg); }
+    .inside-text { color:#99778a; font-size:12px; line-height:1.7; margin:16px auto; max-width:390px; }
+    .coupon-grid { display:grid; grid-template-columns:1fr; gap:12px; max-width:420px; margin:20px auto; }
+    .coupon { position:relative; padding:15px 12px; border:2px dashed #dfa0b8; border-radius:10px; background:#fff1f5; color:#a45d7c; transform:rotate(-.5deg); }
+    .coupon:nth-child(even) { transform:rotate(.6deg); background:#fff8ef; border-color:#e6c39a; }
+    .coupon strong { display:block; font:25px 'Sacramento',cursive; }
+    .coupon span { font-size:10px; }
+    .coupon button { display:block; margin:9px auto 0; border:0; border-radius:30px; padding:7px 14px; color:white; background:#d780a2; font-size:10px; cursor:pointer; }
+    .coupon.used { opacity:.55; filter:grayscale(.3); }
+    .back-btn { margin-top:17px; }
+    .footer-note { text-align:center; font:22px 'Sacramento',cursive; color:#bd7895; margin:22px 0 0; }
+    .confetti { position:fixed; pointer-events:none; z-index:10; font-size:18px; animation:floatUp 1.6s ease-out forwards; }
+    @keyframes floatUp { from { transform:translateY(0) scale(.7); opacity:1; } to { transform:translateY(-110px) scale(1.3); opacity:0; } }
+
+    @media (max-width:430px) {
+      .page { padding:20px 13px 34px; }
+      .paper { padding:45px 20px 35px; }
+      h1 { font-size:43px; }
+      .gift-grid { gap:12px; }
+      .gift-card { min-height:207px; padding:10px 9px 12px; }
+      .gift-image-wrap { height:125px; }
+      .gift-name { font-size:25px; }
+      .music-card { gap:9px; padding:12px; }
+      .music-icon { width:42px; height:42px; flex-basis:42px; }
+      .music-card button { padding:9px 11px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section id="cover" class="page active">
+      <div class="cover-wrap">
+        <div class="paper">
+          <span class="sticker s1">🎀</span><span class="sticker s2">✿</span>
+          <span class="sticker s3">♡</span><span class="sticker s4">🌷</span>
+          <div class="eyebrow">a tiny journal made with love</div>
+          <h1>A Little Box<br>of Happiness</h1>
+          <p class="subtitle">A few little surprises, a whole lot of love, and a day that's all about you.</p>
+          <div class="cover-art">🧁 🌸 🍓</div>
+          <button class="primary-btn" id="openJournal">OPEN JOURNAL ♡</button>
+          <p class="tiny-note">turn the page to find your surprises</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="journal" class="page">
+      <div class="journal-shell">
+        <header class="journal-head">
+          <div class="eyebrow">page one · the happy things</div>
+          <h2>Your little gift collection</h2>
+          <p>Four tiny surprises, picked just for you ♡</p>
+        </header>
+
+        <div class="music-card">
+          <div class="music-icon" id="musicIcon">♫</div>
+          <div class="music-copy">
+            <strong id="musicTitle">A birthday tune for you</strong>
+            <span id="musicStatus">Play the music to unlock all your gifts.</span>
+          </div>
+          <button id="musicButton">▶ PLAY</button>
+        </div>
+        <p class="lock-hint" id="lockHint">🔒 Your gifts are waiting for the birthday music!</p>
+
+        <div class="gift-grid">
+          <button class="gift-card" data-gift="cake" disabled>
+            <div class="gift-image-wrap"><span class="tape"></span><img class="gift-image" src="cake.jpg" alt="Birthday cake" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="gift-emoji" style="display:none">🎂</div></div>
+            <div class="gift-name">Birthday Cake</div><p class="gift-caption">make a little wish</p><div class="lock-overlay">🔒</div>
+          </button>
+          <button class="gift-card" data-gift="chocolate" disabled>
+            <div class="gift-image-wrap"><span class="tape"></span><img class="gift-image" src="chocolate.jpg" alt="Chocolates" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="gift-emoji" style="display:none">🍫</div></div>
+            <div class="gift-name">Chocolate Treat</div><p class="gift-caption">a little sweetness</p><div class="lock-overlay">🔒</div>
+          </button>
+          <button class="gift-card" data-gift="flower" disabled>
+            <div class="gift-image-wrap"><span class="tape"></span><img class="gift-image" src="flower.jpg" alt="Flower bouquet" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="gift-emoji" style="display:none">💐</div></div>
+            <div class="gift-name">A Flower Bouquet</div><p class="gift-caption">just because ♡</p><div class="lock-overlay">🔒</div>
+          </button>
+          <button class="gift-card" data-gift="coupons" disabled>
+            <div class="gift-image-wrap"><span class="tape"></span><div class="gift-emoji">🎟️</div></div>
+            <div class="gift-name">Friendship Coupons</div><p class="gift-caption">redeem whenever</p><div class="lock-overlay">🔒</div>
+          </button>
+        </div>
+        <p class="footer-note">made of little things & lots of love ♡</p>
+      </div>
+    </section>
+
+    <section id="giftPage" class="page">
+      <div class="inside-paper" id="giftContent"></div>
+    </section>
+  </main>
+
+  <script>
+    const pages = {
+      cover: document.getElementById('cover'),
+      journal: document.getElementById('journal'),
+      gift: document.getElementById('giftPage')
+    };
+    function showPage(name) {
+      Object.values(pages).forEach(p => p.classList.remove('active'));
+      pages[name].classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    document.getElementById('openJournal').addEventListener('click', () => showPage('journal'));
+
+    // A small synthesized Happy Birthday tune. It uses no external audio file.
+    let audioContext = null;
+    let musicTimer = null;
+    let musicPlaying = false;
+    let musicUnlocked = false;
+    let noteIndex = 0;
+    let nextNoteTime = 0;
+
+    const melody = [
+      [392, .32], [392, .18], [440, .5], [392, .5], [523.25, .5], [493.88, .9],
+      [392, .32], [392, .18], [440, .5], [392, .5], [587.33, .5], [523.25, .9],
+      [392, .32], [392, .18], [783.99, .5], [659.25, .5], [523.25, .5], [493.88, .5], [440, .9],
+      [698.46, .32], [698.46, .18], [659.25, .5], [523.25, .5], [587.33, .5], [523.25, 1.0]
+    ];
+
+    function playNote(freq, start, duration) {
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, start);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.13, start + 0.025);
+      gain.gain.setTargetAtTime(0.0001, start + duration - 0.06, 0.04);
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start(start);
+      osc.stop(start + duration + 0.08);
+    }
+
+    function scheduleMelody() {
+      if (!musicPlaying) return;
+      while (nextNoteTime < audioContext.currentTime + 0.35) {
+        const [freq, duration] = melody[noteIndex];
+        playNote(freq, nextNoteTime, duration * 0.88);
+        nextNoteTime += duration * 0.62;
+        noteIndex = (noteIndex + 1) % melody.length;
+      }
+    }
+
+    function unlockGifts() {
+      musicUnlocked = true;
+      document.querySelectorAll('.gift-card').forEach(card => {
+        card.disabled = false;
+        card.classList.add('unlocked');
+      });
+      document.getElementById('lockHint').textContent = '✿ Your gifts are unlocked! Pick whichever one you like ♡';
+      document.getElementById('musicStatus').textContent = 'Your gifts are unlocked. Enjoy the birthday tune!';
+    }
+
+    async function toggleMusic() {
+      const button = document.getElementById('musicButton');
+      const status = document.getElementById('musicStatus');
+      try {
+        if (!audioContext) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) throw new Error('Audio is not supported in this browser.');
+          audioContext = new AudioCtx();
+        }
+        if (audioContext.state === 'suspended') await audioContext.resume();
+
+        if (!musicPlaying) {
+          musicPlaying = true;
+          noteIndex = 0;
+          nextNoteTime = audioContext.currentTime + 0.08;
+          scheduleMelody();
+          musicTimer = setInterval(scheduleMelody, 100);
+          unlockGifts();
+          button.textContent = 'Ⅱ PAUSE';
+          status.textContent = 'Now playing: Happy Birthday ♡';
+          document.getElementById('musicIcon').textContent = '🎶';
+        } else {
+          musicPlaying = false;
+          clearInterval(musicTimer);
+          musicTimer = null;
+          button.textContent = '▶ PLAY';
+          status.textContent = musicUnlocked ? 'Gifts are unlocked. Play the tune again anytime!' : 'Play the music to unlock all your gifts.';
+          document.getElementById('musicIcon').textContent = '♫';
+        }
+      } catch (error) {
+        status.textContent = 'Could not start music in this browser. Please try again.';
+      }
+    }
+    document.getElementById('musicButton').addEventListener('click', toggleMusic);
+
+    const giftContent = document.getElementById('giftContent');
+    const giftDetails = {
+      cake: {
+        title: 'A little birthday cake',
+        image: 'cake.jpg',
+        emoji: '🎂',
+        text: 'Make a wish, close your eyes for a second, and enjoy your special day. ♡',
+        extra: '<div style="font-size:48px;margin:10px">🕯️ 🕯️ 🕯️</div><button class="primary-btn" id="wishBtn">BLOW THE CANDLES ✨</button><p id="wishText" class="inside-text">Your wish is waiting...</p>'
+      },
+      chocolate: {
+        title: 'A box of sweetness',
+        image: 'chocolate.jpg',
+        emoji: '🍫',
+        text: 'A little chocolate happiness, because you deserve all the sweet things.',
+        extra: '<div style="font-size:38px;letter-spacing:8px;margin:18px">🍫 🍬 🍫</div><p class="inside-text">Consider this your unlimited virtual chocolate supply.</p>'
+      },
+      flower: {
+        title: 'Flowers for you',
+        image: 'flower.jpg',
+        emoji: '💐',
+        text: 'A little bouquet to make your day bloom. Sending you all the prettiest flowers. ♡',
+        extra: '<div style="font-size:40px;margin:15px">🌷 🌸 🌼 🌷</div>'
+      }
+    };
+
+    function openGift(name) {
+      if (!musicUnlocked) return;
+      if (name === 'coupons') {
+        giftContent.innerHTML = `
+          <div class="eyebrow">a little coupon book</div>
+          <h2>Friendship Coupons ♡</h2>
+          <p class="inside-text">Cut-out style coupons, made to be redeemed whenever you want.</p>
+          <div class="coupon-grid">
+            <div class="coupon"><strong>Unlimited Gossip Pass</strong><span>One full session of tea, no judgement.</span><button onclick="redeem(this)">REDEEM ♡</button></div>
+            <div class="coupon"><strong>Free Rant Session</strong><span>You talk, I listen. No time limit.</span><button onclick="redeem(this)">REDEEM ♡</button></div>
+            <div class="coupon"><strong>One Treat on Me</strong><span>A little treat, chosen by you.</span><button onclick="redeem(this)">REDEEM ♡</button></div>
+            <div class="coupon"><strong>Random Hype-Up</strong><span>A reminder that you're iconic.</span><button onclick="redeem(this)">REDEEM ♡</button></div>
+            <div class="coupon"><strong>No-Judgement Zone</strong><span>Tell me anything. Your safe space.</span><button onclick="redeem(this)">REDEEM ♡</button></div>
+          </div>
+          <button class="secondary-btn back-btn" onclick="showPage('journal')">← BACK TO JOURNAL</button>`;
+      } else {
+        const item = giftDetails[name];
+        giftContent.innerHTML = `
+          <div class="eyebrow">a little something for you</div>
+          <h2>${item.title}</h2>
+          <img class="inside-photo" src="${item.image}" alt="${item.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div style="display:none;font-size:90px;margin:25px">${item.emoji}</div>
+          <p class="inside-text">${item.text}</p>
+          ${item.extra}
+          <button class="secondary-btn back-btn" onclick="showPage('journal')">← BACK TO JOURNAL</button>`;
+        if (name === 'cake') {
+          document.getElementById('wishBtn').addEventListener('click', () => {
+            document.getElementById('wishText').textContent = 'Wish sent into the universe! ✨';
+            document.getElementById('wishBtn').textContent = 'WISH MADE ♡';
+            document.getElementById('wishBtn').disabled = true;
+            sprinkle();
+          });
+        }
+      }
+      showPage('gift');
+      sprinkle();
+    }
+
+    function redeem(button) {
+      button.textContent = 'REDEEMED ✓';
+      button.disabled = true;
+      button.closest('.coupon').classList.add('used');
+      sprinkle();
+    }
+
+    function sprinkle() {
+      const bits = ['♡','✿','✨','🎀'];
+      for (let i=0; i<12; i++) {
+        const el = document.createElement('span');
+        el.className = 'confetti';
+        el.textContent = bits[Math.floor(Math.random()*bits.length)];
+        el.style.left = (8 + Math.random()*84) + 'vw';
+        el.style.top = (65 + Math.random()*25) + 'vh';
+        el.style.animationDelay = (Math.random()*.25) + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 1900);
+      }
+    }
+
+    document.querySelectorAll('.gift-card').forEach(card => {
+      card.addEventListener('click', () => openGift(card.dataset.gift));
+    });
+  </script>
+</body>
+</html>
